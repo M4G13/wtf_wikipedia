@@ -41,8 +41,8 @@ declare class Document {
   sentences(clue?: string | number): Sentence[]
   tables(clue?: number): List[]
   table(clue?: number): List | null
-  templates(clue?: number): List[]
-  template(clue?: number): List | null
+  templates(clue?: number): Template[]
+  template(clue?: number): Template | null
   text(options?: object): string
   title(str?: string): null | string
   url(): string | null
@@ -56,7 +56,8 @@ declare class Document {
 }
 
 declare class Section {
-  children(clue?: string | number): Section | Section[] | null
+  children(clue: string | number): Section | Section[] | null
+  children(): Section[]
   citations: () => object | object[]
   coordinates(): object | object[]
   depth(): number
@@ -69,7 +70,7 @@ declare class Section {
   last(): Section | null
   lastSibling(): Section | null
   links(clue?: string | number): object | object[]
-  lists(): object | object[]
+  lists(): List[]
   next(): Section | null
   nextSibling(): Section | null
   paragraphs(): object | object[]
@@ -102,7 +103,7 @@ declare class Infobox {
 }
 
 declare class Template {
-  json(): object
+  json(): {list: string[], template: string}
   text(): string
   wikitext(): string
 }
@@ -167,7 +168,7 @@ declare class Link {
 
 declare class List {
   json(options?: object): object
-  lines(): object[]
+  lines(): Sentence[]
   links(clue: string): Link[]
   text(): string
   wikitext(): string
@@ -203,9 +204,14 @@ type fetchDefaults = {
 type fetchCallback = (error: any, response: (null | Document | Document[])) => any;
 
 declare function fetch(
-  title: string | number | Array<number> | Array<string>,
+  title: Array<number> | Array<string>,
   options?: fetchDefaults | undefined, callback?: fetchCallback
-): Promise<null | Document | Document[]>;
+): Promise<null | Document[]>;
+
+declare function fetch(
+  title: string | number,
+  options?: fetchDefaults | undefined, callback?: fetchCallback
+): Promise<null | Document>;
 
 declare function wtf(wiki: string, options?: object): Document
 declare namespace wtf {
