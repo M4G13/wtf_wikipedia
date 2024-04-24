@@ -80,7 +80,7 @@ declare class Section {
   references(): object | object[]
   remove(): null | Document
   sections(clue?: string | number): Section | Section[] | null
-  sentences(): object | object[]
+  sentences(): Sentence[]
   tables(): object | object[]
   templates(clue?: string | number): object | object[]
   text(options: object): string
