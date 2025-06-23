@@ -83,7 +83,7 @@ declare class Section {
   sentences(): Sentence[]
   tables(): object | object[]
   templates(clue?: string | number): object | object[]
-  text(options: object): string
+  text(options?: object): string
   title(): string
   wikitext(): string
 }
